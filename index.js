@@ -1,31 +1,67 @@
-const listItems = document.querySelectorAll('.nav-list-item');
-const currentPage = window.location.href;
-let link;
+const openModalBtn = document.getElementById("openModalBtn");
+const closeModalBtn = document.querySelector(".closeModalBtn");
+const signInOption = document.querySelector(".signInOption");
+const signUpOption = document.querySelector(".signUpOption");
+const signUpBtn = document.querySelector(".signUpBtn");
+const signInBtn = document.querySelector(".signInBtn");
+const signUpForm = document.getElementById("signUpForm");
+const signInForm = document.getElementById("signInForm");
+const modal = document.getElementById("signupModal");
 
-// function itself should be imported to main.js
-export function changeNavBgColor() {
-  function removeAllCurrentPageClasses() {
-    listItems.forEach(item => item.classList.remove('current-page'));
-  }
+openModalBtn.addEventListener("click", openModal);
+closeModalBtn.addEventListener("click", closeModal);
+signInOption.addEventListener("click", showSignInForm);
+signUpOption.addEventListener("click", showSignUpForm);
+signUpBtn.addEventListener("click", signUp);
+signInBtn.addEventListener("click", signIn);
 
-  function setCurrentPageClass(link) {
-    if (link && link.href === currentPage) {
-      link.closest('.nav-list-item').classList.add('current-page');
-    }
-  }
-
-  function clickHandler(event) {
-    removeAllCurrentPageClasses();
-    event.currentTarget.classList.add('current-page');
-  }
-
-  listItems.forEach(item => {
-    link = item.querySelector('.nav-link');
-    setCurrentPageClass(link);
-
-    item.addEventListener('click', clickHandler);
-  });
+function openModal() {
+  modal.style.display = "block";
+  openModalBtn.style.display = "none";
+  showSignUpForm();
 }
 
-// function should be called in main.js
-changeNavBgColor();
+function closeModal() {
+  modal.style.display = "none";
+  openModalBtn.style.display = "block";
+}
+
+function showSignInForm() {
+  signUpForm.style.display = "none";
+  signInForm.style.display = "block";
+  signInOption.classList.add("active");
+  signUpOption.classList.remove("active");
+}
+
+function showSignUpForm() {
+  signUpForm.style.display = "block";
+  signInForm.style.display = "none";
+  signUpOption.classList.add("active");
+  signInOption.classList.remove("active");
+}
+
+function signUp() {
+  iziToast.show({
+    title: "Success",
+    message: "Sign up successful!",
+    theme: "dark",
+    icon: "icon-person",
+    color: "green",
+    position: "topRight",
+    timeout: 5000,
+  });
+  closeModal();
+}
+
+function signIn() {
+  iziToast.show({
+    title: "Success",
+    message: "Sign in successful!",
+    theme: "dark",
+    icon: "icon-person",
+    color: "green",
+    position: "topRight",
+    timeout: 5000,
+  });
+  closeModal();
+}
